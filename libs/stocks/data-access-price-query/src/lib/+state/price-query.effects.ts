@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import {
   StocksAppConfig,
   StocksAppConfigToken
@@ -11,7 +12,8 @@ import {
   FetchPriceQuery,
   PriceQueryActionTypes,
   PriceQueryFetched,
-  PriceQueryFetchError
+  PriceQueryFetchError,
+  ShowAlert
 } from './price-query.actions';
 import { PriceQueryPartialState } from './price-query.reducer';
 import { PriceQueryResponse } from './price-query.type';
@@ -39,9 +41,21 @@ export class PriceQueryEffects {
     }
   );
 
+  @Effect() showAlert$ = this.dataPersistence.fetch(
+    PriceQueryActionTypes.ShowAlert,
+    {
+      run: (action: ShowAlert, state: PriceQueryPartialState) => {
+        this._snackBar.open(action.msg, 'Close', {
+          duration: 3000
+        });
+      }
+    }
+  );
+
   constructor(
     @Inject(StocksAppConfigToken) private env: StocksAppConfig,
     private httpClient: HttpClient,
-    private dataPersistence: DataPersistence<PriceQueryPartialState>
+    private dataPersistence: DataPersistence<PriceQueryPartialState>,
+    private _snackBar: MatSnackBar
   ) {}
 }

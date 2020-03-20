@@ -9,13 +9,15 @@ import {
   priceQueryReducer,
   PRICEQUERY_FEATURE_KEY
 } from './+state/price-query.reducer';
+import { MatSnackBarModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
     StoreModule.forFeature(PRICEQUERY_FEATURE_KEY, priceQueryReducer),
-    EffectsModule.forFeature([PriceQueryEffects])
+    EffectsModule.forFeature([PriceQueryEffects]),
+    MatSnackBarModule
   ],
   providers: [PriceQueryFacade]
 })
