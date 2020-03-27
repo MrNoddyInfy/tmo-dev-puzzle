@@ -5,9 +5,7 @@ import { transformPriceQueryResponse } from './price-query-transformer.util';
 
 export const PRICEQUERY_FEATURE_KEY = 'priceQuery';
 
-export interface PriceQueryState extends EntityState<PriceQuery> {
-  selectedSymbol: string;
-}
+export interface PriceQueryState extends EntityState<PriceQuery> {}
 
 export function sortByDateNumeric(a: PriceQuery, b: PriceQuery): number {
   return a.dateNumeric - b.dateNumeric;
@@ -24,9 +22,9 @@ export interface PriceQueryPartialState {
   readonly [PRICEQUERY_FEATURE_KEY]: PriceQueryState;
 }
 
-export const initialState: PriceQueryState = priceQueryAdapter.getInitialState({
-  selectedSymbol: ''
-});
+export const initialState: PriceQueryState = priceQueryAdapter.getInitialState(
+  {}
+);
 
 export function priceQueryReducer(
   state: PriceQueryState = initialState,
@@ -38,12 +36,6 @@ export function priceQueryReducer(
         transformPriceQueryResponse(action.queryResults),
         state
       );
-    }
-    case PriceQueryActionTypes.SelectSymbol: {
-      return {
-        ...state,
-        selectedSymbol: action.symbol
-      };
     }
   }
   return state;
