@@ -1,25 +1,19 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- **/
 import { Server } from 'hapi';
+import { stocksPlugin } from './app/stocks.plugin';
+import { SERVER_CONFIG, ROUTES } from './app/stocks.constants';
 
 const init = async () => {
-  const server = new Server({
-    port: 3333,
-    host: 'localhost'
-  });
+  const server = new Server(SERVER_CONFIG);
 
   server.route({
     method: 'GET',
-    path: '/',
+    path: ROUTES.HOME,
     handler: (request, h) => {
-      return {
-        hello: 'world'
-      };
+      return h.response("Stocks API serving...");
     }
-  });
-
+  })
+  
+  await server.register(stocksPlugin);
   await server.start();
   console.log('Server running on %s', server.info.uri);
 };
