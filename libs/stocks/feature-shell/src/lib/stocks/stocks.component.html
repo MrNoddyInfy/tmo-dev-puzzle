@@ -14,22 +14,54 @@
         "
         >Please enter a symbol</span
       >
+    </mat-error></mat-form-field
+  ><br />
+
+  <mat-label><b>Favorite time period</b></mat-label>
+
+  <mat-form-field>
+    <input
+      matInput
+      [matDatepicker]="fromPicker"
+      [max]="maxDate"
+      formControlName="fromDate"
+      placeholder="From"
+    />
+    <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+    <mat-datepicker touchUi #fromPicker></mat-datepicker>
+    <mat-error
+      ><span
+        *ngIf="
+          !stockPickerForm.get('fromDate').valid &&
+          stockPickerForm.get('fromDate').touched
+        "
+        >Please select from date</span
+      >
     </mat-error>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Favorite time period</mat-label>
-    <mat-select formControlName="period">
-      <mat-option
-        *ngFor="let timePeriod of timePeriods"
-        [value]="timePeriod.value"
+    <input
+      matInput
+      [matDatepicker]="toPicker"
+      [max]="maxDate"
+      formControlName="toDate"
+      placeholder="To"
+    />
+    <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+    <mat-datepicker touchUi #toPicker></mat-datepicker>
+    <mat-error
+      ><span
+        *ngIf="
+          !stockPickerForm.get('toDate').valid &&
+          stockPickerForm.get('toDate').touched
+        "
+        >Please select to date</span
       >
-        {{ timePeriod.viewValue }}
-      </mat-option>
-    </mat-select>
+    </mat-error>
   </mat-form-field>
 
-  <button (click)="fetchQuote()" mat-raised-button>Go</button>
+  <button class="margin-5" (click)="fetchQuote()" mat-raised-button>Go</button>
 </form>
 
-<coding-challenge-chart [data$]="quotes$"></coding-challenge-chart>
+<coding-challenge-chart [chartData]="data"></coding-challenge-chart>
